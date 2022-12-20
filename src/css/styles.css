@@ -1,3 +1,63 @@
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  line-height: initial;
+}
+
+address {
+  font-style: normal;
+}
+
+img {
+  display: block;
+  margin: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -17,4 +77,30 @@ body {
   padding: 8px;
   max-width: 320px;
   margin-bottom: 16px;
+}
+.country-list {
+}
+.country-info {
+}
+.flag-country {
+  display: flex;
+ 
+
+}
+.flag-img {
+  width: 60; 
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.details-div {
+}
+.list {
+
+}
+.item {
+  font-weight: bold;
+  
+}
+.text-span {
+ font-weight: normal;
 }
