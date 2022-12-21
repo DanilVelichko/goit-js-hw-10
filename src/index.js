@@ -2,7 +2,7 @@ import './css/styles.css';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
-const DEBOUNCE_DELAY = 1000;
+const DEBOUNCE_DELAY = 300;
 const refs = {
     searchBox: document.querySelector('input'),
     countryList: document.querySelector('.country-list'),
@@ -12,39 +12,39 @@ const refs = {
 refs.searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput() {
-    const countryName = refs.searchBox.value;
+    const countryName = refs.searchBox.value.trim();
     const findUrl = `https://restcountries.com/v2/name/${countryName}`;
- 
-    fetch(findUrl)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-            Notiflix.Notify.failure('Oops, there is no country with that name');
-            throw new Error(response.status);
-        })
-        .then((data) => {
-            if (data.length > 10) {
-                clearFields();
-                Notiflix.Notify.failure('Too many matches found. Please enter a more specific name.');
-                throw new Error(data.status);
-            }
-            else if (data.length > 2 && data.length < 10) {
-                clearFields();
-                showDataList(data);
-            }    
-            else {
-                Notiflix.Notify.info(data[0].name);
-                clearFields();
-                showDataInfo(data);
-            }
-        })
+    if (countryName == "" || countryName == " " ) {
+        clearFields();
+    } else {
+        fetch(findUrl)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                Notiflix.Notify.failure('Oops, there is no country with that name');
+                throw new Error(response.status);
+            })
+            .then((data) => {
+            
+                if (data.length > 10) {
+                    clearFields();
+                    Notiflix.Notify.failure('Too many matches found. Please enter a more specific name.');
+                    throw new Error(data.status);
+                }
+                else if (data.length > 2 && data.length < 10) {
+                    clearFields();
+                    showDataList(data);
+                }
+                else {
+                    Notiflix.Notify.info(data[0].name);
+                    clearFields();
+                    showDataInfo(data);
+                }
+            })
 
-        .catch(error => console.log('Catch >>>> error', error));
-}
-
-function langIterator(data) {
-    return data.map(a => a.name);
+            .catch(error => console.log('Catch >>>> error', error));
+    }
 }
 
 function createMarkup(obj) {
@@ -73,7 +73,7 @@ function showDataInfo(data) {
             <ul class='list'>
             <li class='item'>Capital: <span class="text-span">${data[0].capital}</span></li>
             <li class='item'>Population: <span class="text-span"> ${data[0].population} people</span></li>
-            <li class='item'>Languages: <span class="text-span">${langIterator(data[0].languages)
+            <li class='item'>Languages: <span class="text-span">${((data[0].languages).map(a => a.name))
             .toString().split(',').join(', ')}</span></li>
             </ul>
             </div>
@@ -83,4 +83,5 @@ function showDataInfo(data) {
 function clearFields() {
     refs.countryInfo.innerHTML = '';
     refs.countryList.innerHTML = '';
+    
 }
