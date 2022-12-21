@@ -83,5 +83,4 @@ function showDataInfo(data) {
 function clearFields() {
     refs.countryInfo.innerHTML = '';
     refs.countryList.innerHTML = '';
-    
 }
